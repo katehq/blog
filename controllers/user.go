@@ -32,6 +32,7 @@ func Userpost(c *gin.Context) {
 	}
 	err = user.AddUser()
 	if err != nil {
+		models.Migrate()
 		c.JSON(200, gin.H{
 			"status": 0,
 			"msg":    "创建失败",
