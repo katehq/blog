@@ -4,6 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"blog/models"
+	"strconv"
+	"blog/api"
 )
 
 // Postget get post
@@ -29,9 +31,18 @@ func Postpost(c *gin.Context) {
 
 // Posts all
 func Posts(c *gin.Context)  {
-	var posts []models.Post
-	posts = models.GetAll()
-	c.JSON(200, gin.H{
-		"posts":posts,
-	})	
+	api.PostsList(c)	
+}
+
+// PostByID find by id
+func PostByID(c *gin.Context){
+	id := c.Param("id")
+	idint, err := strconv.Atoi(id)
+	if err != nil {
+		panic("not find")
+	}
+	var p models.Post
+	p.GetPost(idint)
+	p.UpdateViews()
+	api.PostList(c,p)
 }

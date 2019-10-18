@@ -27,3 +27,15 @@ func GetAll() []Post {
 	db.Find(&posts)
 	return posts
 }
+
+// GetPost get single post with id
+func (p *Post) GetPost(id int)  {
+	db := Open()
+	db.Where("id = ?", id).Find(&p)
+}
+
+// UpdateViews add the views
+func (p *Post) UpdateViews()  {
+	db := Open()
+	db.Model(p).Update("view", p.View+1)
+}

@@ -9,14 +9,15 @@ import (
 func main() {
 	router := gin.Default()
 	router.Use(middleware.Cors())
-	router.GET("/posts/:id", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"main": "main",
-		})
-	})
+
 	router.POST("/users", controllers.Userpost)
+	
+	router.GET("/post/:id", controllers.PostByID)
+	router.GET("/posts", controllers.Posts)
+	router.POST("/login", controllers.Login)
+
+	router.Use(middleware.Auth())
 	router.GET("/users", controllers.Userget)
 	router.POST("/posts/new", controllers.Postpost)
-	router.GET("/posts", controllers.Posts)
 	router.Run(":8082")
 }
